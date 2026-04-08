@@ -7,11 +7,6 @@ from scipy import stats
 import pydeck as pdk
 from PIL import Image
 
+st.title("Page 2")
 
-
-
-st.title("Manning Prediction Model")
-
-
-page_1 = st.page("pages/page_1.py", title="Page 1")
-
+st.image("payload_light_only.png")
