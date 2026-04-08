@@ -7,7 +7,4 @@ from scipy import stats
 import pydeck as pdk
 from PIL import Image
 
-st.title("Page 2")
-
-st.image("Vandenberg Prediction (2026–2030).png")
-
+st.title("Page 4")

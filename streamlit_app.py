@@ -21,6 +21,8 @@ st.markdown(
 - Our recommendations to each squadron to prepare for more Space flight
 """
 )
+st.video("https://youtu.be/Ewvs3fxxj9M?si=g1DG0YuEaKqQTfYu", autoplay=False)
+
 
 # page_1 = st.Page("pages/page_1.py", title="Page 1")
 
