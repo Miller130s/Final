@@ -8,4 +8,4 @@ scipy
 pydeck
 pillow
 joblib
-scikit-learn
+scikit-learn==1.7.2
