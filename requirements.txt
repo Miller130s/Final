@@ -1,0 +1,10 @@
+streamlit
+importlib.metadata
+pandas
+streamlit_echarts
+streamlit
+numpy
+scipy
+pydeck
+pillow
+base64

@@ -7,6 +7,8 @@ from scipy import stats
 import pydeck as pdk
 from PIL import Image
 
-st.title("Page 3")
-
+st.title("Why Mission Assurance is Important")
 st.image("Total Success Percentage by Year.png")
+st.write("The graph above shows the total success percentage of launches from 2010 to 2023. The data indicates that while there have been fluctuations in success rates, there is a general trend towards improvement over time. This underscores the importance of mission assurance in ensuring the reliability and success of space missions, as even a small percentage of failures can have significant consequences in terms of cost, safety, and scientific outcomes.")
+
+
