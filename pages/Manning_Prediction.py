@@ -1,31 +1,26 @@
+from numpy import ceil
 import streamlit as st
 from PIL import Image
 import pandas as pd
 import joblib
+import math
 
 
 
-Off_TDs = st.slider("Select the number of offensive touchdowns scored", min_value=1, max_value=100)
-Off_Rank = st.slider("Select the Off rank of the team", min_value=1, max_value=133)
-Def_Rank = st.slider("Select the Deff rank of the team", min_value=1, max_value=133)
-Touchdowns = st.slider("Select how many TDs the team scored in total", min_value=1, max_value=300)
-Yards_Play_Allowed = st.slider("Select the yards a team gave up per game on defense", min_value=1, max_value=700)
-st.dataframe(df)
-cfb_df = pd.DataFrame({
-    "Off TDs": [Off_TDs],
-    "Off Rank": [Off_Rank],
-    "Def Rank": [Def_Rank],
-    "Touchdowns": [Touchdowns],
-    "Yards/Play Allowed": [Yards_Play_Allowed],
+missions = st.slider("Select the number of missions", min_value=1, max_value=10)
+tasks_per_mission = st.slider("Select the average number of important tasks per mission", min_value=1, max_value=500)
+total_tasks = missions * tasks_per_mission
+# st.dataframe(pd.read_csv("data/man.csv"))
+power_df = pd.DataFrame({
+    "missions": [missions],
+    "tasks_per_mission": [tasks_per_mission],
+    "total_tasks": [total_tasks]
     
 })
-chosen = st.selectbox('Choose your model', ['Linear Regression'])
 
-
-if chosen == 'Linear Regression':
-    data = joblib.load('TEAMRANK.joblib')
+data = joblib.load('manpower_predict.joblib')
 
 model = data["model"]
-Win_PCT_prediction = model.predict(cfb_df)
+manpower_prediction = model.predict(power_df)
 
-st.write("Predicted WIN%:", Win_PCT_prediction)
+st.write("Predicted Manpower:", math.ceil(manpower_prediction))

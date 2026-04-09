@@ -27,7 +27,7 @@ st.markdown(f"""
 <style>
 .stApp {{
     background-image: url("data:image/png;base64,{encoded}");
-    background-size: cover;
+    background-size: contain;
     background-position: center center;
     background-repeat: no-repeat;
     background-attachment: fixed;
