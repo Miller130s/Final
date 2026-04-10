@@ -21,8 +21,3 @@ st.markdown(
 )
 
 st.video("https://youtu.be/Ewvs3fxxj9M?si=g1DG0YuEaKqQTfYu", autoplay=False)
-
-# st.video("https://youtu.be/AcoFvwsuIQI?si=XPQWlL38kYFbspoGstart=360&end=377"", autoplay=False)
-         
-# Use a '?' to start parameters and an '&' to separate them.
-st.video("https://www.youtube.com/watch?v=AcoFvwsuIQI&start=360&end=377", autoplay=False)
