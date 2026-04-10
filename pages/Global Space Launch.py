@@ -7,6 +7,8 @@ from scipy import stats
 import pydeck as pdk
 from PIL import Image
 
+st.set_page_config(page_title="Global Space Launch", page_icon=":rocket:")
+
 st.title("Manning Prediction Model")
 
 st.image("shift.png")
