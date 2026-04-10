@@ -9,6 +9,6 @@ from PIL import Image
 
 st.set_page_config(page_title="Global Space Launch", page_icon=":rocket:", layout="wide")
 
-st.title("Manning Prediction Model")
+st.title("Global Space Launch")
 
 st.image("shift.png")
