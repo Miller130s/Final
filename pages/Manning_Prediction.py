@@ -28,8 +28,19 @@ data = joblib.load('PB_predict.joblib')
 
 model = data["model"]
 manpower_prediction = model.predict(power_df)
+total = math.ceil(manpower_prediction[0])
 
-st.write("Total Predicted Manpower(MATS):", math.ceil(manpower_prediction[0]))
-st.write("Predicted MATS at ASO:", math.ceil(manpower_prediction[0] * 0.2))
-st.write("Predicted MATS at SLC4:", math.ceil(manpower_prediction[0] * 0.4))
-st.write("Predicted MATS at B398:", math.ceil(manpower_prediction[0] * 0.4))
+weights = [0.2, 0.4, 0.4]
+values = [math.floor(total * w) for w in weights]
+
+# Fix rounding on last value
+values[-1] = total - sum(values[:-1])
+
+st.write("ASO:", values[0])
+st.write("SLC4:", values[1])
+st.write("B398:", values[2])
+st.write("Total:", total)
+# ASO = st.write("Predicted MATS at ASO:", math.ceil(manpower_prediction[0] * 0.2))
+# SLC4 = st.write("Predicted MATS at SLC4:", math.ceil(manpower_prediction[0] * 0.4))
+# B398 = st.write("Predicted MATS at B398:", math.ceil(manpower_prediction[0] * 0.4))
+# total = st.write(math.ceil(manpower_prediction[0]), "MATS needed in total for the campaign")
