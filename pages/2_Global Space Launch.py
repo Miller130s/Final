@@ -271,12 +271,15 @@ def calculate_surge_color(launch_count):
         return [255, 255, 0, 200]  # Bright Yellow
         
     # 3. High Density (Orange)
-    elif launch_count < 100:
+    elif launch_count < 75:
         return [255, 140, 0, 200]  # Deep Orange
         
     # 4. Extreme Surge (Red)
+    elif launch_count < 100:
+        return [255, 0, 0, 200]    # Bright Red   
+
     else:
-        return [255, 0, 0, 200]    # Bright Red
+        return [255, 69, 0, 200]    # Fiery Red
 
 
 # --- 3. Cleaning Function ---
@@ -423,7 +426,7 @@ else:
                 launch_counts["coordinates"] = launch_counts.apply(lambda r: [r["lon"], r["lat"]], axis=1)
                 
                 # Dynamic Elevation Scaling (Slightly reduced to avoid camera clipping)
-                launch_counts["elevation"] = launch_counts["launch_count"] * 20000 
+                launch_counts["elevation"] = launch_counts["launch_count"] * 30000 
                 
                 # --- Dynamic Color Scaling (New!) ---
                 launch_counts["color"] = launch_counts["launch_count"].apply(calculate_surge_color)
