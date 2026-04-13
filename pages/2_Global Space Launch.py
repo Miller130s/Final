@@ -290,159 +290,119 @@ def clean_location(location):
     elif "Gran Canaria" in location: return "Gran Canaria"
     return None
 
-# --- 3. Load and Build Timeline ---
+# --- 3. Loading Data & Predictions ---
 @st.cache_data
-def load_full_data():
+def load_prepared_data():
     try:
         df = pd.read_csv("data/Master_Space_Data_All.csv")
-    except Exception:
-        df = pd.DataFrame(columns=["Datum", "Location"])
-
-    # Clean columns just in case
-    df.columns = df.columns.str.strip()
+    except:
+        df = pd.DataFrame(columns=['Datum', 'Location'])
 
     def extract_year(date_str):
-        match = re.search(r"(19\d{2}|20\d{2})", str(date_str))
+        match = re.search(r'(19\d{2}|20\d{2})', str(date_str))
         return int(match.group(1)) if match else None
 
-    df["year"] = df["Datum"].apply(extract_year)
+    df['year'] = df['Datum'].apply(extract_year)
     df["clean_loc"] = df["Location"].apply(clean_location)
-
-    df = df.dropna(subset=["year", "clean_loc"]).copy()
-    df["year"] = df["year"].astype(int)
-
-    # Group historical launches by year and location
-    historical = (
-        df.groupby(["year", "clean_loc"])
-        .size()
-        .reset_index(name="launch_count")
-    )
-    historical["status"] = "Historical"
-
-    # Predictions
+    df = df.dropna(subset=['year', 'clean_loc'])
+    df["lat"] = df["clean_loc"].apply(lambda x: location_coords[x][0] if x in location_coords else None)
+    df["lon"] = df["clean_loc"].apply(lambda x: location_coords[x][1] if x in location_coords else None)
+    
+    # YOUR ACTUAL PREDICTION DATA (Corrected Years)
     predictions = [
-        {"year": 2026, "clean_loc": "Cape Canaveral", "launch_count": 116},
-        {"year": 2026, "clean_loc": "Vandenberg", "launch_count": 81},
+        {"year": 2026, "clean_loc": "Cape Canaveral", "launch_count": 95},
+        {"year": 2026, "clean_loc": "Vandenberg", "launch_count": 45},
         {"year": 2026, "clean_loc": "Jiuquan", "launch_count": 32},
         {"year": 2026, "clean_loc": "Taiyuan", "launch_count": 14},
         {"year": 2026, "clean_loc": "Wenchang", "launch_count": 8},
         {"year": 2026, "clean_loc": "Xichang", "launch_count": 17},
         {"year": 2026, "clean_loc": "Yellow Sea", "launch_count": 4},
-
-        {"year": 2027, "clean_loc": "Cape Canaveral", "launch_count": 132},
-        {"year": 2027, "clean_loc": "Vandenberg", "launch_count": 98},
+        {"year": 2027, "clean_loc": "Cape Canaveral", "launch_count": 110},
+        {"year": 2027, "clean_loc": "Vandenberg", "launch_count": 55},
         {"year": 2027, "clean_loc": "Jiuquan", "launch_count": 36},
         {"year": 2027, "clean_loc": "Taiyuan", "launch_count": 16},
         {"year": 2027, "clean_loc": "Wenchang", "launch_count": 9},
         {"year": 2027, "clean_loc": "Xichang", "launch_count": 17},
         {"year": 2027, "clean_loc": "Yellow Sea", "launch_count": 5},
-
-        {"year": 2028, "clean_loc": "Cape Canaveral", "launch_count": 148},
-        {"year": 2028, "clean_loc": "Vandenberg", "launch_count": 115},
+        {"year": 2028, "clean_loc": "Cape Canaveral", "launch_count": 130},
+        {"year": 2028, "clean_loc": "Vandenberg", "launch_count": 65},
         {"year": 2028, "clean_loc": "Jiuquan", "launch_count": 40},
         {"year": 2028, "clean_loc": "Taiyuan", "launch_count": 18},
         {"year": 2028, "clean_loc": "Wenchang", "launch_count": 10},
         {"year": 2028, "clean_loc": "Xichang", "launch_count": 18},
         {"year": 2028, "clean_loc": "Yellow Sea", "launch_count": 6},
-
-        {"year": 2029, "clean_loc": "Cape Canaveral", "launch_count": 165},
-        {"year": 2029, "clean_loc": "Vandenberg", "launch_count": 133},
+        {"year": 2029, "clean_loc": "Cape Canaveral", "launch_count": 150},
+        {"year": 2029, "clean_loc": "Vandenberg", "launch_count": 75},
         {"year": 2029, "clean_loc": "Jiuquan", "launch_count": 44},
         {"year": 2029, "clean_loc": "Taiyuan", "launch_count": 20},
         {"year": 2029, "clean_loc": "Wenchang", "launch_count": 11},
         {"year": 2029, "clean_loc": "Xichang", "launch_count": 19},
         {"year": 2029, "clean_loc": "Yellow Sea", "launch_count": 7},
-
-        {"year": 2030, "clean_loc": "Cape Canaveral", "launch_count": 181},
-        {"year": 2030, "clean_loc": "Vandenberg", "launch_count": 150},
+        {"year": 2030, "clean_loc": "Cape Canaveral", "launch_count": 180},
+        {"year": 2030, "clean_loc": "Vandenberg", "launch_count": 90},
         {"year": 2030, "clean_loc": "Jiuquan", "launch_count": 48},
         {"year": 2030, "clean_loc": "Taiyuan", "launch_count": 22},
         {"year": 2030, "clean_loc": "Wenchang", "launch_count": 12},
         {"year": 2030, "clean_loc": "Xichang", "launch_count": 19},
-        {"year": 2030, "clean_loc": "Yellow Sea", "launch_count": 8},
+        {"year": 2030, "clean_loc": "Yellow Sea", "launch_count": 8}
     ]
+    
+    pdf = pd.DataFrame(predictions)
+    pdf["lat"] = pdf["clean_loc"].apply(lambda x: location_coords[x][0])
+    pdf["lon"] = pdf["clean_loc"].apply(lambda x: location_coords[x][1])
+    
+    return df.dropna(subset=['lat', 'lon']).copy(), pdf
 
-    predicted = pd.DataFrame(predictions)
-    predicted["status"] = "Predicted"
+space_df, predict_df = load_prepared_data()
 
-    # Add coordinates
-    for d in [historical, predicted]:
-        d["lat"] = d["clean_loc"].apply(lambda x: location_coords.get(x, [None, None])[0])
-        d["lon"] = d["clean_loc"].apply(lambda x: location_coords.get(x, [None, None])[1])
-
-    historical = historical.dropna(subset=["lat", "lon"])
-    predicted = predicted.dropna(subset=["lat", "lon"])
-
-    # IMPORTANT:
-    # Keep historical only through 2025
-    # Keep predicted from 2026 onward
-    historical = historical[historical["year"] <= 2025].copy()
-    predicted = predicted[predicted["year"] >= 2026].copy()
-
-    timeline_df = pd.concat([historical, predicted], ignore_index=True)
-    timeline_df = timeline_df.sort_values(["year", "clean_loc"]).reset_index(drop=True)
-
-    return timeline_df
-
-timeline_df = load_full_data()
-
-min_year = int(timeline_df["year"].min()) if not timeline_df.empty else 1957
-max_year = int(timeline_df["year"].max()) if not timeline_df.empty else 2030
-
-st.write(f"Timeline range: **{min_year} to {max_year}**")
-
-# --- 4. Animation ---
-if st.button("▶️ Start Year-by-Year Animation"):
-    header_placeholder = st.empty()
-    map_placeholder = st.empty()
-
-    for year in range(min_year, max_year + 1):
-        year_data = timeline_df[timeline_df["year"] == year].copy()
-
-        if year_data.empty:
-            continue
-
-        # Colors by historical vs predicted
-        year_data["color"] = year_data["status"].apply(
-            lambda x: [255, 165, 0, 180] if x == "Historical" else [0, 255, 100, 200]
-        )
-
-        year_data["coordinates"] = year_data.apply(lambda r: [r["lon"], r["lat"]], axis=1)
-        year_data["elevation"] = year_data["launch_count"] * 10000
-
-        status_text = year_data["status"].iloc[0]
-
-        layer = pdk.Layer(
-            "ColumnLayer",
-            data=year_data,
-            get_position="coordinates",
-            get_elevation="elevation",
-            get_fill_color="color",
-            radius=80000,
-            extruded=True,
-            pickable=True,
-        )
-
-        deck = pdk.Deck(
-            layers=[layer],
-            initial_view_state=pdk.ViewState(
-                latitude=20,
-                longitude=10,
-                zoom=1.1,
-                pitch=45
-            ),
-            tooltip={"html": "<b>Location:</b> {clean_loc}<br/><b>Count:</b> {launch_count}"}
-        )
-
-        header_placeholder.subheader(f"Global Launches in: {year} ({status_text})")
-        map_placeholder.pydeck_chart(deck)
-
-        time.sleep(0.8)
-
+# --- 4. Main App & Animation ---
+if space_df.empty and predict_df.empty:
+    st.error("No data found. Check your CSV and prediction lists.")
 else:
-    st.info("Click the button to animate launches from 1957 through 2030.")
+    # Determine the timeline range
+    hist_years = space_df['year'].unique()
+    min_year = int(min(hist_years)) if len(hist_years) > 0 else 2026
+    max_year = 2030
 
-# Sidebar reset
-if st.sidebar.button("Hard Reset Cache"):
-    st.cache_data.clear()
-    st.rerun()
+    if st.button('▶️ Start Year-by-Year Animation'):
+        header_placeholder = st.empty()
+        map_placeholder = st.empty()
+
+        for year in range(min_year, max_year + 1):
+            if year <= 2025:
+                current_data = space_df[space_df['year'] == year]
+                launch_counts = current_data.groupby(["lat", "lon", "clean_loc"]).size().reset_index(name="launch_count")
+                status_text = "Historical"
+                bar_color = [255, 165, 0, 180] # Orange
+            else:
+                launch_counts = predict_df[predict_df['year'] == year].copy()
+                status_text = "PREDICTED SURGE"
+                bar_color = [0, 255, 100, 200] # Green
+
+            if not launch_counts.empty:
+                launch_counts["coordinates"] = launch_counts.apply(lambda r: [r["lon"], r["lat"]], axis=1)
+                # Elevation scaling (1 launch = 10km height)
+                launch_counts["elevation"] = launch_counts["launch_count"] * 10000 
+                launch_counts["color"] = [bar_color] * len(launch_counts)
+
+                layer = pdk.Layer(
+                    "ColumnLayer",
+                    data=launch_counts,
+                    get_position="coordinates",
+                    get_elevation="elevation",
+                    get_fill_color="color",
+                    radius=80000,
+                    extruded=True,
+                    pickable=True,
+                )
+
+                header_placeholder.subheader(f"Global Launches in: {year} ({status_text})")
+                map_placeholder.pydeck_chart(pdk.Deck(
+                    layers=[layer],
+                    initial_view_state=pdk.ViewState(latitude=20, longitude=10, zoom=1.1, pitch=45),
+                    tooltip={"html": "<b>Location:</b> {clean_loc}<br/><b>Count:</b> {launch_count}"}
+                ))
+            
+            time.sleep(0.4)
+    else:
+        st.info(f"Ready to visualize {min_year} through {max_year}. Click 'Start' to see the surge.")
