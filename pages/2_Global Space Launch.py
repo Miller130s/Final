@@ -110,7 +110,7 @@ def clean_location(location):
 def load_and_map_data():
     try:
         # Use the correct filename (match your folder)
-        df = pd.read_csv("Data/Master_Space_Data_All.csv")
+        df = pd.read_csv("Data/Master_Space_Data_All.txt")
     except FileNotFoundError:
         return pd.DataFrame() # Return empty if file missing
 
