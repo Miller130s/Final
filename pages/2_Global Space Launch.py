@@ -300,7 +300,7 @@ def clean_location(location):
 def load_prepared_data_v2():
     try:
         # Load and clean the CSV
-        df = pd.read_csv("Data/Master_Space_Data_All.csv")
+        df = pd.read_csv("Data/Master_Space_Data_All.txt")
     except:
         return pd.DataFrame(), pd.DataFrame()
 
@@ -420,6 +420,6 @@ else:
                     tooltip={"html": "<b>Location:</b> {clean_loc}<br/><b>Count:</b> {launch_count}"}
                 ))
             
-            time.sleep(0.3)
+            time.sleep(0.6)
     else:
         st.info(f"Historical Data Found from {min_year}. Predictions through {max_year}. Click 'Start' to begin.")
