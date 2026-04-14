@@ -1,4 +1,4 @@
-# Space Launch Project
+# Space Launch
 ### HOME
 
 #### Good morning. My name is Nick, and this is Jake. We have analyzed over 600 flight records from 1957 to the present to determine where the space industry is headed.
@@ -48,12 +48,12 @@
 
 #### As you can see space travel is a safe as it's ever been. But mishaps still happen. This is why it is important to stay engaged and do our part to further safen space travel when providing mission assurance at the pad.
 
-## Please check out the Streamlit app for predictions on manpower and what is needed per mission. The manpower prediction model is based on the number of important tasks and the number of missions happenning simultaiously. 
+### Please check out the Streamlit app for predictions on manpower and what is needed per mission. The manpower prediction model is based on the number of important tasks and the number of missions happenning simultaiously. (https://space-launch.streamlit.app/)
 
 
 ### Recommendations
  
-#### Integrating the need for heavy-lift infrastructure
+### Integrating the need for heavy-lift infrastructure
 #### Based on this data we are seeing a surge in heavy payloads at the Cape. to support these requirements, we are suggesting that new pads at Vandenberg that  are able to support the future use of Falcon Heavy (capable of lifting 141,000 lbs ) and starship (Starship capable of lifting 331,000 lbs)
 
 
@@ -63,7 +63,7 @@
 #### This will ultimately help us launch more payloads per mission saving more time
 
 
-#### Maximize MAT Capacity and Readiness via Predictive Manpower Modeling
+### Maximize MAT Capacity and Readiness via Predictive Manpower Modeling
 #### Having every capable member of the squadron MAT-qualified, we can ensure additional personnel are available to perform MAT duties as needed.
 
 
