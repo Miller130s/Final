@@ -11,6 +11,30 @@
  
 
 ![](shift.png)
+
+### GLOBAL SPACE LAUNCH: A SHIFT IN DOMINANCE
+
+#### This data provides a visual narrative of how the space launch industry has fundamentally changed over the last 35 years. For decades, the industry was defined by state agencies like NASA and Roscosmos (Russia). During this time, launch cadences were stable and predictable, rarely exceeding 30 missions annually.
+
+#### Around 2008, China began showing consistent growth, steadily climbing to become a major global player by 2018. While state-run, their aggressive cadence signaled the end of the traditional US-Russia duopoly.
+
+#### Our analysis highlights 2013 as the definitive "Turning Point." While SpaceX and ULA had relatively small footprints at the time, this is the year the industry shifted toward commercial providers. This transition marked a move away from government-owned hardware toward the "Launch as a Service" model.
+
+#### While SpaceX first appeared on the board in 2007, their "explosion" began in earnest in 2013. Between 2020 and 2025, SpaceX’s launch frequency achieved a near-vertical trajectory, jumping to over 165 launches a year.
+
+#### By 2025, the primary competitors in the launch sector are SpaceX and China. Traditional state agencies now represent only a small fraction of total annual launches.
+
+#### For organizations managing these missions, this trend highlights an urgent need for efficient manpower modeling:
+
+#### High-Volume Oversight: As launch counts rise, maintaining mission assurance becomes a high-volume task.
+
+#### Scalable Expertise: This requires a higher density of qualified MATs to ensure safety isn't sacrificed for speed.
+
+#### Next: In the following slides, we will dive deeper into our predictive models for Vandenberg SFB and Cape Canaveral.
+
+
+
+
 ### GLOBAL SPACE LAUNCH
 ### This picture provides a visual narrative of how the space launch industry has fundamentally changed over the last 35 years to SpaceX dominating today. For decades, the industry was defined by state agencies like NASA and Russia. Launch cadences were stable, rarely exceeding 30 missions annually.
 
